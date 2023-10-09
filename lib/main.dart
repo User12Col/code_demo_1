@@ -15,7 +15,6 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,8 +24,7 @@ class MyApp extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.create_rounded),
-            onPressed: () => Navigator.push(
-                context,
+            onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute(
                     builder: (context) =>
                         EditNoteScreen(id: -1, title: '', content: ''))),

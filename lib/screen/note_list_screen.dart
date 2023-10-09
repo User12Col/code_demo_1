@@ -11,6 +11,14 @@ class NoteListScreen extends StatefulWidget {
 }
 
 class _NoteListScreenState extends State<NoteListScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +37,10 @@ class _NoteListScreenState extends State<NoteListScreen> {
             itemCount: notes.length,
             itemBuilder: (context, index) {
               return GestureDetector(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>EditNoteScreen(
-                    id: notes[index].id,title: notes[index].title, content: notes[index].content))),
+                onTap: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) =>EditNoteScreen(
+                      id: notes[index].id!,title: notes[index].title, content: notes[index].content)));
+                },
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30), color: Colors.white

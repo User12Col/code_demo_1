@@ -11,10 +11,10 @@ class SqliteHelper {
 
     Database database = await openDatabase(
       dbPath,
-      version: 1,
+      version: 2,
       onCreate: (Database db, int version) async {
         await db.execute(
-          'CREATE TABLE note(id INTEGER PRIMARY KEY, title TEXT, date TEXT, content TEXT)',
+          'CREATE TABLE note(id INTEGER PRIMARY KEY AUTOINCREMENT , title TEXT, date TEXT, content TEXT)',
         );
       },
     );
@@ -45,5 +45,14 @@ class SqliteHelper {
   Future<void> updateNote(Note note) async {
     final db = await openData();
     await db.update('note', note.toMap(), where: 'id=?', whereArgs: [note.id]);
+  }
+
+  Future<void> deleteNote(int id) async{
+    final db = await openData();
+    await db.delete(
+      'note',
+      where: 'id = ?',
+      whereArgs: [id]
+    );
   }
 }

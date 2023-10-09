@@ -1,5 +1,6 @@
 import 'package:code_demo_2/api/sqlite_helper.dart';
 import 'package:code_demo_2/model/note.dart';
+import 'package:code_demo_2/screen/note_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -57,7 +58,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
           IconButton(
             onPressed: (){
               if(widget.id == -1){
-                Note note = Note(id: 0, title: _titleController.text, date: DateFormat.yMMMd().format(DateTime.now()), content: _contentController.text);
+                Note note = Note(title: _titleController.text, date: DateFormat.yMMMd().format(DateTime.now()), content: _contentController.text);
                 insertNote(note);
                 Navigator.pop(context);
               } else{
