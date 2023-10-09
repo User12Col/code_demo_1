@@ -24,10 +24,12 @@ class MyApp extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.create_rounded),
-            onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                    builder: (context) =>
-                        EditNoteScreen(id: -1, title: '', content: ''))),
+            onPressed: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          EditNoteScreen(id: -1, title: '', content: '')));
+            },
           )
         ],
       ),

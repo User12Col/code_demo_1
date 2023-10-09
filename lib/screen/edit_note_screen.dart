@@ -52,7 +52,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
         title: const Text('Multi Notes'),
         centerTitle: true,
         leading: IconButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Navigator.pop(context, 'true'),
             icon: const Icon(Icons.arrow_back)),
         actions: [
           IconButton(
@@ -60,11 +60,11 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
               if(widget.id == -1){
                 Note note = Note(title: _titleController.text, date: DateFormat.yMMMd().format(DateTime.now()), content: _contentController.text);
                 insertNote(note);
-                Navigator.pop(context);
+                Navigator.pop(context, 'true');
               } else{
                 Note note = Note(id: widget.id, title: _titleController.text, date: DateFormat.yMMMd().format(DateTime.now()), content: _contentController.text);
                 updateNote(note);
-                Navigator.pop(context);
+                Navigator.pop(context, 'true');
               }
             },
             icon: Icon(Icons.save),

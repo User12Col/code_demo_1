@@ -37,9 +37,14 @@ class _NoteListScreenState extends State<NoteListScreen> {
             itemCount: notes.length,
             itemBuilder: (context, index) {
               return GestureDetector(
-                onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) =>EditNoteScreen(
+                onTap: () async{
+                  String rs = await Navigator.of(context).push(MaterialPageRoute(builder: (context) =>EditNoteScreen(
                       id: notes[index].id!,title: notes[index].title, content: notes[index].content)));
+                  if(rs == 'true'){
+                    setState(() {
+                      notes = snapshot.data!;
+                    });
+                  }
                 },
                 child: Container(
                   decoration: BoxDecoration(
