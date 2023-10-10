@@ -15,32 +15,34 @@ class _NoteListScreenState extends State<NoteListScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Note>>(
       future: SqliteHelper().notes(),
-      builder: (context, snapshot){
+      builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return const Center(child: Text('No notes available.'));
-        } else{
+        } else {
           List<Note> notes = snapshot.data!;
           return ListView.separated(
             itemCount: notes.length,
             itemBuilder: (context, index) {
               return GestureDetector(
-                onTap: () async{
-                  String rs = await Navigator.of(context).push(MaterialPageRoute(builder: (context) =>EditNoteScreen(
-                      id: notes[index].id!,title: notes[index].title, content: notes[index].content)));
-                  if(rs == 'true'){
+                onTap: () async {
+                  String rs = await Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => EditNoteScreen(
+                              id: notes[index].id!,
+                              title: notes[index].title,
+                              content: notes[index].content)));
+                  if (rs == 'true') {
                     setState(() {
                       notes = snapshot.data!;
                     });
@@ -48,33 +50,51 @@ class _NoteListScreenState extends State<NoteListScreen> {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30), color: Colors.white
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      borderRadius: BorderRadius.circular(30),
+                      color: Colors.white),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   margin: index == 0
                       ? const EdgeInsets.only(top: 10, left: 10, right: 10)
                       : const EdgeInsets.only(left: 10, right: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        notes[index].title,
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            notes[index].title,
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 26,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            notes[index].date,
+                            style: const TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                          Text(
+                            notes[index].content,
+                            style: const TextStyle(color: Colors.black),
+                            maxLines: 3,
+                          ),
+                        ],
                       ),
-                      Text(
-                        notes[index].date,
-                        style: const TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                      Text(
-                        notes[index].content,
-                        style: const TextStyle(color: Colors.black),
-                        maxLines: 3,
-                      ),
+                      IconButton(
+                        padding: EdgeInsets.all(0),
+                        alignment: Alignment.centerRight,
+                        onPressed: () async{
+                          await SqliteHelper().deleteNote(notes[index].id!);
+                          setState(() {
+
+                          });
+                        },
+                        icon: Icon(Icons.delete),
+                        color: Colors.black,
+                      )
                     ],
                   ),
                 ),

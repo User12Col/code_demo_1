@@ -13,8 +13,14 @@ void main() async {
   ));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,11 +30,16 @@ class MyApp extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.create_rounded),
-            onPressed: () {
-              Navigator.of(context).push(
+            onPressed: () async {
+              String rs = await Navigator.of(context).push(
                   MaterialPageRoute(
                       builder: (context) =>
                           EditNoteScreen(id: -1, title: '', content: '')));
+              if(rs == 'true'){
+                setState(() {
+
+                });
+              }
             },
           )
         ],
@@ -37,3 +48,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
